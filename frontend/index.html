@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Study Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===================== LOGIN SCREEN ===================== -->
+  <section id="auth-screen" class="auth-screen">
+    <div class="auth-card">
+      <div class="auth-tab-label">01 — sign in</div>
+      <h1 class="brand">Smart Study<br>Companion</h1>
+      <p class="auth-sub">Your notes, turned into summaries, quizzes and flashcards.</p>
+
+      <form id="auth-form">
+        <label class="field">
+          <span>Name</span>
+          <input type="text" id="auth-username" placeholder="e.g. ananya" required>
+        </label>
+        <label class="field">
+          <span>Passcode</span>
+          <input type="password" id="auth-password" placeholder="••••••••" required>
+        </label>
+        <div class="auth-actions">
+          <button type="submit" id="btn-login" class="btn btn-primary">Log in</button>
+          <button type="button" id="btn-register" class="btn btn-ghost">Create account</button>
+        </div>
+        <p id="auth-message" class="auth-message"></p>
+      </form>
+    </div>
+    <div class="auth-side" aria-hidden="true">
+      <div class="index-card ic-1"><span class="ic-eyebrow">DEFINITION</span><strong>Encapsulation</strong><p>Bundling data and the methods that use it inside one class.</p></div>
+      <div class="index-card ic-2"><span class="ic-eyebrow">QUIZ</span><strong>Q3.</strong><p>Which principle hides implementation detail? ___</p></div>
+      <div class="index-card ic-3"><span class="ic-eyebrow">STREAK</span><strong>7 days</strong><p>Keep the chain going.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== MAIN APP ===================== -->
+  <div id="app" class="app hidden">
+
+    <aside class="rail">
+      <div class="rail-brand">
+        <span class="rail-mark">SSC</span>
+        <span class="rail-user" id="current-user">student</span>
+      </div>
+      <nav class="tabs" id="tabs">
+        <button class="tab active" data-tab="dashboard"><span class="tab-index">01</span>Dashboard</button>
+        <button class="tab" data-tab="library"><span class="tab-index">02</span>Upload &amp; Library</button>
+        <button class="tab" data-tab="summarize"><span class="tab-index">03</span>Summarize</button>
+        <button class="tab" data-tab="ask"><span class="tab-index">04</span>Ask a Question</button>
+        <button class="tab" data-tab="quiz"><span class="tab-index">05</span>Quiz Me</button>
+        <button class="tab" data-tab="flashcards"><span class="tab-index">06</span>Flashcards</button>
+        <button class="tab" data-tab="planner"><span class="tab-index">07</span>Study Planner</button>
+        <button class="tab" data-tab="progress"><span class="tab-index">08</span>Progress</button>
+      </nav>
+      <button id="btn-logout" class="rail-logout">Log out</button>
+    </aside>
+
+    <main class="content">
+
+      <!-- DASHBOARD -->
+      <section class="panel active" id="panel-dashboard">
+        <header class="panel-head">
+          <div class="eyebrow">Today's desk</div>
+          <h2>Where you left off</h2>
+        </header>
+        <div class="dash-grid">
+          <div class="stat-card">
+            <span class="stat-label">Study streak</span>
+            <span class="stat-value mono" id="stat-streak">0</span>
+            <span class="stat-unit">days</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Topics completed</span>
+            <span class="stat-value mono" id="stat-topics">0</span>
+            <span class="stat-unit">topics</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Quizzes taken</span>
+            <span class="stat-value mono" id="stat-quizzes">0</span>
+            <span class="stat-unit">attempts</span>
+          </div>
+          <div class="stat-card warn-card">
+            <span class="stat-label">Weak topics</span>
+            <span class="stat-value mono" id="stat-weak">—</span>
+            <span class="stat-unit">needs revision</span>
+          </div>
+        </div>
+        <div class="dash-empty" id="dash-hint">
+          <p>Head to <strong>Upload &amp; Library</strong> to add your first document — notes, a chapter PDF, or a Word file — and the tools below will unlock.</p>
+        </div>
+      </section>
+
+      <!-- LIBRARY -->
+      <section class="panel" id="panel-library">
+        <header class="panel-head">
+          <div class="eyebrow">Materials</div>
+          <h2>Upload &amp; Library</h2>
+        </header>
+
+        <div class="upload-box" id="upload-box">
+          <input type="file" id="file-input" accept=".txt,.pdf,.docx" hidden>
+          <p><strong>Drop a file</strong> or click to browse</p>
+          <p class="muted">.txt · .pdf · .docx</p>
+        </div>
+        <p id="upload-message" class="hint"></p>
+
+        <div class="library-list" id="library-list">
+          <p class="muted">No materials yet — nothing here until you upload something.</p>
+        </div>
+      </section>
+
+      <!-- SUMMARIZE -->
+      <section class="panel" id="panel-summarize">
+        <header class="panel-head">
+          <div class="eyebrow">Condense</div>
+          <h2>Summarize</h2>
+        </header>
+        <div class="control-row">
+          <select id="summarize-material" class="select"></select>
+          <div class="segmented" id="summary-length">
+            <button class="seg active" data-length="short">Short</button>
+            <button class="seg" data-length="detailed">Detailed</button>
+          </div>
+          <button id="btn-summarize" class="btn btn-primary">Generate</button>
+        </div>
+        <div class="result-columns">
+          <div class="result-block">
+            <h3>Summary</h3>
+            <div id="summary-output" class="prose muted">Your summary will appear here.</div>
+          </div>
+          <div class="result-block">
+            <h3>Key points</h3>
+            <ul id="keypoints-output" class="bullet-list muted"><li>Key points will appear here.</li></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ASK -->
+      <section class="panel" id="panel-ask">
+        <header class="panel-head">
+          <div class="eyebrow">Retrieval</div>
+          <h2>Ask a Question</h2>
+        </header>
+        <div class="control-row">
+          <select id="ask-material" class="select"></select>
+        </div>
+        <form id="ask-form" class="ask-form">
+          <input type="text" id="ask-input" placeholder="e.g. What is polymorphism?" required>
+          <button type="submit" class="btn btn-primary">Ask</button>
+        </form>
+        <div id="ask-thread" class="ask-thread"></div>
+      </section>
+
+      <!-- QUIZ -->
+      <section class="panel" id="panel-quiz">
+        <header class="panel-head">
+          <div class="eyebrow">Test yourself</div>
+          <h2>Quiz Me</h2>
+        </header>
+        <div class="control-row">
+          <select id="quiz-material" class="select"></select>
+          <button id="btn-quiz" class="btn btn-primary">New quiz</button>
+        </div>
+        <div id="quiz-area"></div>
+      </section>
+
+      <!-- FLASHCARDS -->
+      <section class="panel" id="panel-flashcards">
+        <header class="panel-head">
+          <div class="eyebrow">Recall</div>
+          <h2>Flashcards</h2>
+        </header>
+        <div class="control-row">
+          <select id="flash-material" class="select"></select>
+          <button id="btn-flash" class="btn btn-primary">Build deck</button>
+        </div>
+        <p class="hint">Click a card to flip it.</p>
+        <div id="flash-deck" class="flash-deck"></div>
+      </section>
+
+      <!-- PLANNER -->
+      <section class="panel" id="panel-planner">
+        <header class="panel-head">
+          <div class="eyebrow">Schedule</div>
+          <h2>Study Planner</h2>
+        </header>
+        <form id="planner-form" class="planner-form">
+          <label class="field">
+            <span>Subjects (comma separated)</span>
+            <input type="text" id="planner-subjects" placeholder="Java, DBMS, Machine Learning" required>
+          </label>
+          <div class="field-row">
+            <label class="field">
+              <span>Hours per day</span>
+              <input type="number" id="planner-hours" min="1" max="8" value="3" required>
+            </label>
+            <label class="field">
+              <span>Days until exam</span>
+              <input type="number" id="planner-days" min="1" max="30" value="5" required>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">Build schedule</button>
+        </form>
+        <div id="planner-output" class="planner-output"></div>
+      </section>
+
+      <!-- PROGRESS -->
+      <section class="panel" id="panel-progress">
+        <header class="panel-head">
+          <div class="eyebrow">Tracking</div>
+          <h2>Progress</h2>
+        </header>
+        <div class="progress-grid">
+          <div>
+            <h3>Quiz history</h3>
+            <div id="progress-quizzes" class="bullet-list muted">No quizzes taken yet.</div>
+          </div>
+          <div>
+            <h3>Topics completed</h3>
+            <form id="topic-form" class="topic-form">
+              <input type="text" id="topic-input" placeholder="Mark a topic as done, e.g. Inheritance">
+              <button type="submit" class="btn btn-ghost">Add</button>
+            </form>
+            <div id="progress-topics" class="chip-row"></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
