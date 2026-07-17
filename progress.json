@@ -1,0 +1,29 @@
+{
+  "testuser": {
+    "quiz_scores": [],
+    "topics_completed": [
+      "Algebra"
+    ],
+    "study_streak": 1,
+    "last_study_date": "2026-07-17"
+  },
+  "Sneha": {
+    "quiz_scores": [
+      {
+        "topic": "QT_Unit_1.pdf",
+        "score": 1,
+        "total": 1,
+        "date": "2026-07-17T07:59:37.131837"
+      },
+      {
+        "topic": "QT_Unit_1.pdf",
+        "score": 0,
+        "total": 1,
+        "date": "2026-07-17T07:59:45.805586"
+      }
+    ],
+    "topics_completed": [],
+    "study_streak": 1,
+    "last_study_date": "2026-07-17"
+  }
+}

@@ -1,22 +1,2 @@
-# Python virtual environment
-backend/venv/
-backend/.venv/
-venv/
-.venv/
-ENV/
-
-# Python cache files
-**/__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Local database / storage data (avoid uploading user credentials)
-backend/data/*.json
-backend/uploads/
-uploads/
-
-# IDE files
-.vscode/
-.idea/
-.DS_Store
+# Created by venv; see https://docs.python.org/3/library/venv.html
+*
